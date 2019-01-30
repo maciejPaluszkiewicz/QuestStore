@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>view Students</title>
+    <link rel="stylesheet" type="text/css" href="../css/mentorStudents.css">
+    <script src="../js/adminMentors.js" async></script>
+
+</head>
+
+<body>
+<header>
+    <div id="home"><a href="mentor.html"><h1>Home</h1></a></div>
+    <div id="logout"><a href="index.html"><h1>Log out</h1></a></div>
+</header>
+<section>
+    <h1>Students</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th >Surname</th>
+            <th >Class</th>
+            <th >Wallet</th>
+
+        </tr>
+        <tr>
+            <td class ="id">1</td>
+            <td class ="name">Jaś</td>
+            <td class = "surname">Fasola</td>
+            <td class = "surname">1a</td>
+            <td class = "surname">0</td>
+        </tr>
+
+        <tr>
+            <td class ="id">1</td>
+            <td class ="name">Jaś</td>
+            <td class = "surname">Fasola</td>
+            <td class = "surname">2a</td>
+            <td class = "surname">0</td>
+        </tr>
+
+        <tr>
+            <td class ="id">1</td>
+            <td class ="name">Jaś</td>
+            <td class = "surname">Fasola</td>
+            <td class = "surname">1a</td>
+            <td class = "surname">0</td>
+
+        </tr>
+
+
+    </table>
+    </br>
+
+</section>
+
+<div id="addMentorBox">
+    <input type="text" id="id" placeholder="Enter id" required/>
+    <input type="text" id="name" placeholder="Enter mentor's name" required>
+    <input type="text" id="surname" placeholder="Enter mentor's surname" required>
+    <input type="text" id="class" placeholder="Enter student's class" required>
+    <input type="text" id="wallet" placeholder="Enter student's coins on start" required>
+    <input type="submit" id="button" value="Add Student" onclick="addMentor()">
+</div>
+<div id="removeMentorBox">
+    <input type="text" id="idToRemove" placeholder="Enter id to kick out a student" required/>
+    <input type="submit" id="buttonToRemove" value="Remove Student" onclick="removeMentor()">
+</div>
+</body>
+</html>

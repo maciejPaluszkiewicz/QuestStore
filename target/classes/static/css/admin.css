@@ -1,0 +1,47 @@
+body, html {
+    height: 100%;
+}
+body {
+background-image: url("../jpg/adminBackground.jpeg");
+height: 100%;
+width:100%;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+h1 {
+    text-align: center;
+    display: block;
+    font-size: 5em;
+    margin-top: 1em;
+    margin-bottom: 1.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+#box-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+  }
+  #box-1 {
+    border:2px solid blue;
+    width: 250px;
+    font-size: 24px;
+    margin: 0;
+  }
+
+  #box-2 {
+    border:2px solid blue;
+    width: 250px;
+    font-size: 24px;
+    margin:0;
+  }
+  .mentor{
+  width:100%
+  }
+  .coins{
+    width:100%
+    }
+
+

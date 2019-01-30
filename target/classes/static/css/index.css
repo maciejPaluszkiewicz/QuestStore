@@ -1,0 +1,105 @@
+    body, html {
+        height: 100%;
+    }
+    body {
+    background-image: url("../jpg/adminBackground.jpeg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  /*  overflow: hidden;*/
+    }
+
+    .users{
+            width:33%;
+            display:inline-block;
+
+    }
+    #usersList{
+        font-family:cursive;
+        text-align:center;
+        /*visibility: hidden;*/
+    }
+    #buttonsList{
+    display: block;
+    list-style-type:none;
+    position: fixed;
+            top: 15%;
+            right: 15%;
+
+    }
+   /* ul > li{
+    margin : 19%;}
+*/
+    .button{
+        display: block;
+        margin : 5%;
+        border-radius: 10px;
+        background-color:coral;
+        border:none;
+        color:white;
+        cursor:pointer;
+        padding: 10px 26px;
+        -webkit-transition-duration: 0.8s;
+    }
+    .button:hover{
+
+        background-color:white;
+        color:coral;
+        box-shadow: 0px 12px 16px 0px rgba(0,0,0,0.24),0px 17px 50px 0px rgba(0,0,0,0.19);
+    }
+
+    .button:active{
+        transform: translateY(1px);
+    }
+    input{
+        display: block;
+        float: center;
+        width: 55%;
+
+    }
+    .Sign{
+        background-image: url("adminBackground.jpeg");
+        border: 5px solid;
+        border-radius: 0 0 5% 5%;
+        border-color: coral;
+        width: 150px;
+        position: absolute;
+        top: 15%;
+        left: 60%;
+       /* visibility: hidden; */
+
+
+    }
+
+    #signUp{
+  /*  visibility: hidden;*/
+    }
+    #signIn{
+    visibility: hidden;
+    }
+
+    label{
+        display: block;
+        color: white;
+        font-family:cursive;
+        font-size: 13px;
+        text-align: center;
+
+    }
+
+
+    .submitStyle{
+            display:block;
+            float: center;
+            width: 93%;
+            margin-bottom: 10px;
+            margin-left: 5px;
+            border-radius: 10px;
+            background-color:coral;
+            border:none;
+            color:white;
+            cursor:pointer;
+            padding: 10px 26px;
+    }
+

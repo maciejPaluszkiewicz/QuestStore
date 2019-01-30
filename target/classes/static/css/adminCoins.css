@@ -1,0 +1,39 @@
+body, html {
+    height: 100%;
+}
+body {
+background-image: url("../jpg/adminBackground.jpeg");
+height: 100%;
+width:100%;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+section
+{
+border: 2px solid blue;
+  width: 80%
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+
+}
+
+table{
+display:flex
+justify-content: center;
+}
+tr:nth-child(even) {
+    background-color: white
+}
+tr:nth-child(odd){
+  background-color: #c9d5e8;
+}
+table{
+border: 3px solid red;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+
+}
