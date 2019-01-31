@@ -3,11 +3,14 @@ package createDB;
 import dao.DataBaseConnector;
 
 public class StudentArtifactTable {
+    private DataBaseConnector dbConnector = new DataBaseConnector();
+
     public StudentArtifactTable() {
-        StudentArtifactTable();
+        this.dbConnector.connect();
+        createStudentArtifactTable();
     }
 
-    public void CreateStudentArtifactTable() {
+    public void createStudentArtifactTable() {
         String sql = "CREATE TABLE IF NOT EXISTS students_artifacts (" +
                 "id_artifact INTEGER NOT NULL, " +
                 "id_student INTEGER NOT NULL, " +
