@@ -1,5 +1,4 @@
 package dao;
-
 import model.Student;
 import model.Wallet;
 import view.View;
@@ -8,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import java.util.List;
 
 public class MentorDAOSQL implements MentorDAO {
@@ -81,6 +81,21 @@ public class MentorDAOSQL implements MentorDAO {
         }
     }
 
+    @Override
+    public List<Student> showStudents() {
+        List<Student> studentList = new ArrayList<>();
+        ResultSet rs = dbConnector.query("SELECT * FROM students");
+        try {
+            while (rs.next()) {
+                Student student = new Student(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8));
+                studentList.add(student);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return studentList;
+    }
+
     private void updateArtifactToShop(String artifact_name, int artifact_quantity) throws SQLException {
         PreparedStatement stmt;
         String sql = "UPDATE artifacts SET quantity = quantity + ?" +
@@ -137,21 +152,6 @@ public class MentorDAOSQL implements MentorDAO {
     }
 
     @Override
-    public List<Student> showStudents() {
-        List<Student> studentList = new ArrayList<>();
-        ResultSet rs = dbConnector.query("SELECT * FROM students");
-        try {
-            while (rs.next()) {
-                Student student = new Student(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8));
-                studentList.add(student);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return studentList;
-    }
-
-    @Override
     public Wallet showStudentsWallet(int id) {
         ResultSet rs = dbConnector.query("SELECT cool_coins FROM students WHERE id =" + id);
         ResultSet rs2 = dbConnector.query("SELECT artifact_name, students_artifacts.quantity FROM artifacts RIGHT JOIN students_artifacts ON artifacts.id_artifact = students_artifacts.id_artifact WHERE students_artifacts.id_student = " + id);
@@ -184,17 +184,17 @@ public class MentorDAOSQL implements MentorDAO {
         return coolCoins;
     }
 
-    public static void main(String[] args) {
-        MentorDAOSQL mds = new MentorDAOSQL();
-        View view = new View();
+//    public static void main(String[] args) {
+//        MentorDAOSQL mds = new MentorDAOSQL();
+//        View view = new View();
 //        mds.createStudent("adam", "maczek", "1b", "anna.naan@buziaczek.pl", "0700990880", 45, 0);
 //          mds.addQuest("zrobic_sniadanie",100, 2);
 //        mds.addArtifactToShop("skecz", 10, 2);
 //        view.printResultSet(mds.showStudents());
-        view.printStudentList(mds.showStudents());
+//        view.printStudentList(mds.showStudents());
 //        view.printResultSet(mds.showStudentsWallet(3).get(0));
 //        view.printResultSet(mds.showStudentsWallet(3).get(1));
-        view.printWallet(mds.showStudentsWallet(1));
+//        view.printWallet(mds.showStudentsWallet(1));
 
-    }
+//    }
 }

@@ -1,10 +1,13 @@
 package dao;
 
 import model.Mentor;
+import view.View;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminDAOSQL implements AdminDAO {
     DataBaseConnector dataBaseConnector = new DataBaseConnector();
@@ -57,6 +60,20 @@ public class AdminDAOSQL implements AdminDAO {
         }
 
     }
+    @Override
+    public List<Mentor> showMentors() {
+        List<Mentor> mentorList = new ArrayList<>();
+        ResultSet rs = dataBaseConnector.query("SELECT * FROM mentors");
+        try {
+            while (rs.next()) {
+                Mentor mentor = new Mentor(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                mentorList.add(mentor);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mentorList;
+    }
 
     @Override
     public Mentor showMentorById(int idMentor) {
@@ -84,12 +101,13 @@ public class AdminDAOSQL implements AdminDAO {
 
     }
 
-//    public static void main(String[] args) {
-//        view view = new view();
-//        AdminDAOSQL adminDAOSQL = new AdminDAOSQL();
-//        adminDAOSQL.createMentor("adam", "maczek", "asd@assa.pl", "0700990880l");
+    public static void main(String[] args) {
+        View view = new View();
+        AdminDAOSQL adminDAOSQL = new AdminDAOSQL();
+        view.printMentorList(adminDAOSQL.showMentors());
+//        adminDAOSQL.createMentor("adam", "maczek", "asd@assa.pl", "0700990880l", "adsakd");
 //        adminDAOSQL.createClass("klsaas");
 //        view.printMentor(adminDAOSQL.showMentorById(1));
 //        adminDAOSQL.editMentor("email", "piotrek3", 2);
-//    }
+    }
 }

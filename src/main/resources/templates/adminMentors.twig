@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>view Mentors</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/adminMentors.css">
+    <script src="../static/js/adminMentors.js" async></script>
+
+</head>
+
+<body>
+<header>
+    <div id="home"><a href="admin.html"><h1>Home</h1></a></div>
+    <div id="logout"><a href="index.html"><h1>Log out</h1></a></div>
+</header>
+<section>
+    <h1>Mentors</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Surname</th>
+
+        </tr>
+        <tr>
+            <td class="id">1</td>
+            <td class="name">Jaś</td>
+            <td class="surname">Fasola</td>
+        </tr>
+
+        <tr>
+            <td>1</td>
+            <td>Jaś</td>
+            <td>Fasola</td>
+        </tr>
+
+        <tr>
+            <td class="id">1</td>
+            <td class="name">Jaś</td>
+            <td class="surname">Fasola</td>
+
+        </tr>
+        {% for i in names %}
+        <tr>
+            {% for name in names %}
+                <td>{{ name[0] }}</td>
+                <td>{{ name[1] }}</td>
+                <td>{{ name[2] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+
+    </table>
+    </br>
+
+</section>
+
+<div id="addMentorBox">
+    <input type="text" id="id" placeholder="Enter id" required/>
+    <input type="text" id="name" placeholder="Enter mentor's name" required>
+    <input type="text" id="surname" placeholder="Enter mentor's surname" required>
+    <input type="submit" id="button" value="Add Mentor" onclick="addMentor()">
+</div>
+<div id="removeMentorBox">
+    <input type="text" id="idToRemove" placeholder="Enter id to fire mentor" required/>
+    <input type="submit" id="buttonToRemove" value="Remove Mentor" onclick="removeMentor()">
+</div>
+</body>
+</html>

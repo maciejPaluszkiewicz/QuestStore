@@ -54,6 +54,12 @@ public class View {
         }
     }
 
+    public void printMentorList(List<Mentor> mentorList){
+        for (Mentor mentor : mentorList){
+            printMentor(mentor);
+        }
+    }
+
     public void printMentor(Mentor mentor) {
         System.out.println(mentor.getId() + " " + mentor.getFirst_name() + " " + mentor.getLast_name() + " " + mentor.getEmail() + " " + mentor.getPhoneNumber());
     }
