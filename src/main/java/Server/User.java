@@ -8,10 +8,10 @@ import org.jtwig.JtwigTemplate;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class Admin implements HttpHandler {
+public class User implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/user.twig");
         JtwigModel model = JtwigModel.newModel();
         String response = template.render(model);
         sendResponse(httpExchange, response);

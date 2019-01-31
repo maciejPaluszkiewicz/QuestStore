@@ -1,7 +1,4 @@
-import Server.Index;
-import Server.LogIn;
-import Server.Admin;
-import Server.AdminMentors;
+import Server.*;
 import com.sun.net.httpserver.HttpServer;
 
 import java.net.InetSocketAddress;
@@ -13,6 +10,13 @@ public class Main {
 
         server.createContext("/twig", new Jtwig());
         server.createContext("/adminmentors", new AdminMentors());
+        server.createContext("/admincoins", new AdminCoins());
+        server.createContext("/mentor", new Mentor());
+        server.createContext("/mentorartifacts", new MentorArtifacts());
+        server.createContext("/mentorquest", new MentorQuest());
+        server.createContext("/mentorstudents", new MentorStudents());
+        server.createContext("/shop", new Shop());
+        server.createContext("/user", new User());
         server.createContext("/admin", new Admin());
         server.createContext("/static", new Static());
         server.createContext("/loginn", new LogIn());
