@@ -2,7 +2,6 @@ package Server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import dao.DataBaseConnector;
 import dao.SessionDAO;
 import dao.SessionDAOSQL;
 
@@ -11,7 +10,6 @@ import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 public class LogIn implements HttpHandler {
     SessionDAO sessionDAO = new SessionDAOSQL();
@@ -21,20 +19,16 @@ public class LogIn implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         HttpCookie cookie;
         if(method.equals("GET")){
-            System.out.println("weszlem");
             try {
             if (httpExchange.getRequestHeaders().getFirst("Cookie") == null) {
-                System.out.println("weszlem2");
 
                 cookie = new HttpCookie("sessionId", "123");
                 httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
-                sendResponse(httpExchange);
+                loadLoginSite(httpExchange);
             }
             cookie = findCurrentCookie(httpExchange).get(0);
-                System.out.println("weszlem"+cookie);
 
                 String sesionId=cookie.getValue();
-                System.out.println("weszlem3");
 
                 if (sessionDAO.isThereSessionId(sesionId)) {
                     String type = sessionDAO.getTypeBySessionId(sesionId);
@@ -53,21 +47,24 @@ public class LogIn implements HttpHandler {
                 }
                 else {
                     System.out.println("WSZLEM");
-                    loadLogIn(httpExchange);
+                    loadLoginSite(httpExchange);
                 }
             }
             catch (SQLException e){
                 e.printStackTrace();
             }
 
-            sendResponse(httpExchange);
+            loadLoginSite(httpExchange);
         }
 
 
     }
 
-    private void loadLogIn(HttpExchange httpExchange) throws IOException {
-
+    private void sendResponse(String response, HttpExchange httpExchange) throws IOException {
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 
     private void loadMentor(HttpExchange httpExchange) throws IOException {
@@ -102,7 +99,7 @@ public class LogIn implements HttpHandler {
 
 
 
-    public void sendResponse(HttpExchange httpExchange) throws IOException {
+    public void loadLoginSite(HttpExchange httpExchange) throws IOException {
         httpExchange.getResponseHeaders().add("Location", "/index");
         httpExchange.sendResponseHeaders(302,0);
         OutputStream os = httpExchange.getResponseBody();

@@ -25,7 +25,12 @@ public class AdminDAOSQL implements AdminDAO {
         catch (SQLException e){
             e.printStackTrace();
         }
-        return Integer.toString(outrput);
+        if(outrput==0) {
+            return null;
+        }
+        else {
+            return Integer.toString(outrput);
+        }
     }
 
     @Override

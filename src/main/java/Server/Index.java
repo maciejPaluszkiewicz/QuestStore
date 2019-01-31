@@ -37,10 +37,11 @@ public class Index implements HttpHandler {
             System.out.println(login+" "+password);
             user=autorise(login,password);
 
-            if(!user.getId().equals("")) {
+            if(user.getId()!=null) {
 
                 Random generator = new Random();
                 int cookieId = generator.nextInt(100000) + 1;
+                System.out.println("Stworzylem Id");
                 sesDao.addSession(Integer.toString(cookieId),user.getType(), Integer.parseInt(user.getId()));
                 String response = loadLoginSite();
                 HttpCookie cookie = new HttpCookie("sessionId", Integer.toString(cookieId));
@@ -48,8 +49,9 @@ public class Index implements HttpHandler {
                 loadHomeSite(httpExchange);
             }
             else{
-                String response = loadLoginSite();
-                sendResponse(response,httpExchange);
+                System.out.println("WszlemTu");
+                loadHomeSite(httpExchange);
+                //sendResponse(response,httpExchange);
             }
 
         }
