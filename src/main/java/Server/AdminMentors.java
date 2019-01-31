@@ -25,28 +25,28 @@ public class AdminMentors implements HttpHandler {
         if (method.equals("POST")){
             String formData = getFormData(httpExchange);
             Map<String, String> inputs = parseFormData(formData);
-            String id = inputs.get("id");
-            String name = inputs.get("name");
-            String surname = inputs.get("surname");
-            String email = inputs.get("email");
-            String phonenumber = inputs.get("phonenumber");
-            String password = "123";
             if (inputs.size() == 4){
-                adminDAOSQL.createMentor(name,surname,email,phonenumber,password);
+                adminDAOSQL.createMentor(inputs.get("name"),inputs.get("surname"),inputs.get("email"),inputs.get("phonenumber"),"123");
             }else if(inputs.size() == 1){
-                adminDAOSQL.removeMentorById(id);
+                adminDAOSQL.removeMentorById(inputs.get("id"));
             }
         }
 
         mentorList = adminDAOSQL.getMentors();
+        sendResponse(httpExchange, template, model, mentorList);
+        return;
+
+    }
+
+    private void sendResponse(HttpExchange httpExchange, JtwigTemplate template, JtwigModel model, List<Mentor> mentorList) throws IOException {
         model.with("mentors", mentorList);
         String response = template.render(model);
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
-
     }
+
     private String getFormData(HttpExchange httpExchange) throws IOException {
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);

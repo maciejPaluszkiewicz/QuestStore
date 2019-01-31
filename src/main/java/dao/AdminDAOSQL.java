@@ -130,13 +130,13 @@ public class AdminDAOSQL implements AdminDAO {
 
     }
 
-    public static void main(String[] args) {
-        View view = new View();
-        AdminDAOSQL adminDAOSQL = new AdminDAOSQL();
-        view.printMentorList(adminDAOSQL.getMentors());
+//    public static void main(String[] args) {
+//        View view = new View();
+//        AdminDAOSQL adminDAOSQL = new AdminDAOSQL();
+//        view.printMentorList(adminDAOSQL.getMentors());
 //        adminDAOSQL.createMentor("adam", "maczek", "asd@assa.pl", "0700990880l", "adsakd");
 //        adminDAOSQL.createClass("klsaas");
 //        view.printMentor(adminDAOSQL.showMentorById(1));
 //        adminDAOSQL.editMentor("email", "piotrek3", 2);
-    }
+//    }
 }
