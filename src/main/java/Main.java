@@ -1,3 +1,4 @@
+import Server.LogIn;
 import Server.Admin;
 import Server.AdminMentors;
 import com.sun.net.httpserver.HttpServer;
@@ -13,6 +14,7 @@ public class Main {
         server.createContext("/adminmentors", new AdminMentors());
         server.createContext("/admin", new Admin());
         server.createContext("/static", new Static());
+        server.createContext("/loginn", new LogIn());
         server.setExecutor(null);
         server.start();
     }
