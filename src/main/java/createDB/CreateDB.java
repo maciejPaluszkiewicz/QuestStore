@@ -12,5 +12,6 @@ public class CreateDB {
         ClassTable createClassTable = new ClassTable();
         StudentTable createStudentTable = new StudentTable();
         CategoryTable createCategoryTable = new CategoryTable();
+        SessionTable createSessionTable = new SessionTable();
     }
 }
