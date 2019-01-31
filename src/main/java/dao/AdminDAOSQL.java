@@ -98,11 +98,12 @@ public class AdminDAOSQL implements AdminDAO {
 
     @Override
     public void removeMentorById(String idMentor){
+        int id = Integer.parseInt(idMentor);
         String sql = "DELETE FROM mentors WHERE id = (?);";
         try {
             dataBaseConnector.connect();
             PreparedStatement stmt = dataBaseConnector.getConnection().prepareStatement(sql);
-            stmt.setString(1, idMentor);
+            stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
