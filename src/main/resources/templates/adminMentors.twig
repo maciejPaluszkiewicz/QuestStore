@@ -22,31 +22,11 @@
             <th>Surname</th>
 
         </tr>
+        {% for mentor in mentors %}
         <tr>
-            <td class="id">1</td>
-            <td class="name">Jaś</td>
-            <td class="surname">Fasola</td>
-        </tr>
-
-        <tr>
-            <td>1</td>
-            <td>Jaś</td>
-            <td>Fasola</td>
-        </tr>
-
-        <tr>
-            <td class="id">1</td>
-            <td class="name">Jaś</td>
-            <td class="surname">Fasola</td>
-
-        </tr>
-        {% for i in names %}
-        <tr>
-            {% for name in names %}
-                <td>{{ name[0] }}</td>
-                <td>{{ name[1] }}</td>
-                <td>{{ name[2] }}</td>
-            {% endfor %}
+            <td>{{ mentor.id }}</td>
+            <td>{{ mentor.firstName}}</td>
+            <td>{{ mentor.lastName}}</td>
         </tr>
         {% endfor %}
 
@@ -56,15 +36,16 @@
 
 </section>
 
-<div id="addMentorBox">
-    <input type="text" id="id" placeholder="Enter id" required/>
-    <input type="text" id="name" placeholder="Enter mentor's name" required>
-    <input type="text" id="surname" placeholder="Enter mentor's surname" required>
+<form id="addMentorBox" method="POST">
+    <input type="text" id="name" name="name" placeholder="Enter mentor's name" required>
+    <input type="text" id="surname" name="surname" placeholder="Enter mentor's surname" required>
+    <input type="text" id="email" name="email" placeholder="Enter mentor's email" required>
+    <input type="text" id="phonenumber" name="phonenumber" placeholder="Enter mentor's phonenumber" required>
     <input type="submit" id="button" value="Add Mentor" onclick="addMentor()">
-</div>
-<div id="removeMentorBox">
-    <input type="text" id="idToRemove" placeholder="Enter id to fire mentor" required/>
+</form>
+<form id="removeMentorBox" method="POST">
+    <input type="text" id="idToRemove" name="id" placeholder="Enter id to fire mentor" required/>
     <input type="submit" id="buttonToRemove" value="Remove Mentor" onclick="removeMentor()">
-</div>
+</form>
 </body>
 </html>

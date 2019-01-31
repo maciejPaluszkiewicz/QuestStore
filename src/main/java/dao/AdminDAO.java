@@ -14,9 +14,11 @@ public interface AdminDAO {
 
     void editMentor(String columnToChange, String update, int id);
 
-    List<Mentor> showMentors();
+    List<Mentor> getMentors();
 
     Mentor showMentorById(int id);
 
     void createLevelOfExperience();
+
+    void removeMentorById(String id);
 }

@@ -2,15 +2,15 @@ package model;
 
 public class Mentor {
     private int id;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String phoneNumber;
 
-    public Mentor(int id, String first_name, String last_name, String email, String phoneNumber) {
+    public Mentor(int id, String firstName, String lastName, String email, String phoneNumber) {
         this.id = id;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
@@ -20,11 +20,11 @@ public class Mentor {
     }
 
     public String getFirst_name() {
-        return first_name;
+        return firstName;
     }
 
     public String getLast_name() {
-        return last_name;
+        return lastName;
     }
 
     public String getEmail() {
