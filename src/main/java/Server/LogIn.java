@@ -21,13 +21,20 @@ public class LogIn implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         HttpCookie cookie;
         if(method.equals("GET")){
+            System.out.println("weszlem");
             try {
             if (httpExchange.getRequestHeaders().getFirst("Cookie") == null) {
-                cookie = new HttpCookie("sessionId", "123");              //Musi wstawic puste cookie na potrzeby trybu incognito,
+                System.out.println("weszlem2");
+
+                cookie = new HttpCookie("sessionId", "123");
                 httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
+                sendResponse(httpExchange);
             }
             cookie = findCurrentCookie(httpExchange).get(0);
-            String sesionId=cookie.getValue();
+                System.out.println("weszlem"+cookie);
+
+                String sesionId=cookie.getValue();
+                System.out.println("weszlem3");
 
                 if (sessionDAO.isThereSessionId(sesionId)) {
                     String type = sessionDAO.getTypeBySessionId(sesionId);
@@ -44,14 +51,16 @@ public class LogIn implements HttpHandler {
                             break;
                     }
                 }
-                else
+                else {
+                    System.out.println("WSZLEM");
                     loadLogIn(httpExchange);
+                }
             }
             catch (SQLException e){
                 e.printStackTrace();
             }
 
-            sendResponse("asd",httpExchange);
+            sendResponse(httpExchange);
         }
 
 
@@ -85,21 +94,16 @@ public class LogIn implements HttpHandler {
         os.close();
     }
 
-    //    Optional<HttpCookie> findCurrentCookie(HttpExchange httpExchange){
-//        httpExchange.getRequestHeaders().getFirst("Cookie");
-//        List<HttpCookie> cookie = HttpCookie.parse(httpExchange.getRequestHeaders().getFirst("Cookie"));
-//        return Optional.ofNullable(cookie.get(1));
-//    }
     public List<HttpCookie> findCurrentCookie(HttpExchange httpExchange){
-        List<String> cookies = httpExchange.getRequestHeaders().get("Cookie");
-        List<HttpCookie> currentCookie = HttpCookie.parse(cookies.get(0));
-        return  currentCookie;
+        System.out.println("weszlem do findCookie");
+        String cookies = httpExchange.getRequestHeaders().getFirst("Cookie");
+        return HttpCookie.parse(cookies);
     }
 
 
 
-    public void sendResponse(String response, HttpExchange httpExchange) throws IOException {
-        httpExchange.getResponseHeaders().add("Location", "/twig");
+    public void sendResponse(HttpExchange httpExchange) throws IOException {
+        httpExchange.getResponseHeaders().add("Location", "/index");
         httpExchange.sendResponseHeaders(302,0);
         OutputStream os = httpExchange.getResponseBody();
         os.write("".getBytes());

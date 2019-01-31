@@ -14,6 +14,24 @@ public class MentorDAOSQL implements MentorDAO {
     DataBaseConnector dbConnector = new DataBaseConnector();
 
     @Override
+    public String autoriseMentor(String login, String password) {
+        ResultSet rs = dbConnector.query("SELECT id FROM mentors WHERE email LIKE '" + login+ "'AND password LIKE '"+password+"';");
+        int outrput=0;
+        try {
+            if (rs.next()) {
+                outrput=rs.getInt(1);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        if(outrput!=0) {
+            return Integer.toString(outrput);
+        }
+        return null;
+    }
+
+    @Override
     public void createStudent(String name, String last_name, String _class, String email, String phone_number, int coolCoins, int lvl, String password) {
         String sql = "INSERT INTO students (first_name, last_name, class, email, phone_number, cool_coins, level) " +
                 "VALUES(?,?,?,?,?,?,?,?);";

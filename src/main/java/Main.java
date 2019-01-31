@@ -1,3 +1,4 @@
+import Server.Index;
 import Server.LogIn;
 import Server.Admin;
 import Server.AdminMentors;
@@ -15,6 +16,7 @@ public class Main {
         server.createContext("/admin", new Admin());
         server.createContext("/static", new Static());
         server.createContext("/loginn", new LogIn());
+        server.createContext("/index", new Index());
         server.setExecutor(null);
         server.start();
     }

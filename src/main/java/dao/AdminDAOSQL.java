@@ -12,6 +12,22 @@ import java.util.List;
 public class AdminDAOSQL implements AdminDAO {
     DataBaseConnector dataBaseConnector = new DataBaseConnector();
 
+
+    @Override
+    public String autoriseAdmin(String login, String password) {
+        ResultSet rs = dataBaseConnector.query("SELECT id FROM admin WHERE email LIKE '" + login+ "'AND password LIKE '"+password+"';");
+        int outrput=0;
+        try {
+            if (rs.next()) {
+                outrput=rs.getInt(1);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return Integer.toString(outrput);
+    }
+
     @Override
     public void createMentor(String first_name, String last_name, String email, String phone_number, String password) {
         String sql = "INSERT INTO mentors (first_name, last_name, email, phone_number,password) " +

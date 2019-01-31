@@ -13,6 +13,24 @@ public class StudentDAOSQL implements StudentDAO {
     private View view = new View();
 
     @Override
+    public String autoriseStudent(String login, String password) {
+        ResultSet rs = dataBaseConnector.query("SELECT id FROM students WHERE email LIKE '" + login+ "'AND password LIKE '"+password+"';");
+        int output=0;
+        try {
+            if (rs.next()) {
+                output=rs.getInt(1);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        if(output!=0) {
+            return Integer.toString(output);
+        }
+        return null;
+    }
+
+    @Override
     public List<ResultSet> showWallet(int id) {
         List<ResultSet> resultSetList = new ArrayList<>();
         ResultSet rs = dataBaseConnector.query("SELECT cool_coins FROM students WHERE id =" + id);

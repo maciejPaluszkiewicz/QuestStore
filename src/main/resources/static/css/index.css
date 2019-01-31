@@ -73,10 +73,10 @@
     }
 
     #signUp{
-  /*  visibility: hidden;*/
+    visibility: hidden;
     }
     #signIn{
-    visibility: hidden;
+    /*visibility: hidden;*/
     }
 
     label{

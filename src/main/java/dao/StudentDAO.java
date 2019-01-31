@@ -4,6 +4,9 @@ import java.sql.ResultSet;
 import java.util.List;
 
 public interface StudentDAO {
+
+    String autoriseStudent(String login, String password);
+
     List<ResultSet> showWallet(int id);
 
     void buyArtifacts(int howMuch, int id_artifact, int id_student);

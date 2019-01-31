@@ -14,7 +14,6 @@ public class Static implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         URI uri = httpExchange.getRequestURI();
-        System.out.println("looking for: " + uri.getPath());
         String path = "." + uri.getPath();
         ClassLoader classLoader = getClass().getClassLoader();
         URL fileURL = classLoader.getResource(path);
