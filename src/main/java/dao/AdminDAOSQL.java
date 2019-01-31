@@ -61,7 +61,7 @@ public class AdminDAOSQL implements AdminDAO {
 
     }
     @Override
-    public List<Mentor> showMentors() {
+    public List<Mentor> getMentors() {
         List<Mentor> mentorList = new ArrayList<>();
         ResultSet rs = dataBaseConnector.query("SELECT * FROM mentors");
         try {
@@ -97,6 +97,18 @@ public class AdminDAOSQL implements AdminDAO {
     }
 
     @Override
+    public void removeMentorById(String idMentor){
+        String sql = "DELETE FROM mentors WHERE id = (?);";
+        try {
+            dataBaseConnector.connect();
+            PreparedStatement stmt = dataBaseConnector.getConnection().prepareStatement(sql);
+            stmt.setString(1, idMentor);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
     public void createLevelOfExperience() {
 
     }
@@ -104,7 +116,7 @@ public class AdminDAOSQL implements AdminDAO {
     public static void main(String[] args) {
         View view = new View();
         AdminDAOSQL adminDAOSQL = new AdminDAOSQL();
-        view.printMentorList(adminDAOSQL.showMentors());
+        view.printMentorList(adminDAOSQL.getMentors());
 //        adminDAOSQL.createMentor("adam", "maczek", "asd@assa.pl", "0700990880l", "adsakd");
 //        adminDAOSQL.createClass("klsaas");
 //        view.printMentor(adminDAOSQL.showMentorById(1));
