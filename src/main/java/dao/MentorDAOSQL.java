@@ -2,6 +2,7 @@ package dao;
 
 import model.Student;
 import model.Wallet;
+import view.View;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +37,7 @@ public class MentorDAOSQL implements MentorDAO {
     @Override
     public void addQuest(String quest_name, int quest_value, int category) {
         String sql = "INSERT INTO students (quest_name, quest_value, category) " +
-                "VALUES(?,?);";
+                "VALUES(?,?,?);";
         try {
             dbConnector.connect();
             PreparedStatement stmt = dbConnector.getConnection().prepareStatement(sql);
@@ -183,17 +184,17 @@ public class MentorDAOSQL implements MentorDAO {
         return coolCoins;
     }
 
-//    public static void main(String[] args) {
-//        MentorDAOSQL mds = new MentorDAOSQL();
-//        view view = new view();
-////        mds.createStudent("adam", "maczek", "1b", "anna.naan@buziaczek.pl", "0700990880", 45, 0);
-////          mds.addQuest("zrobic_sniadanie",100, 2);
-////        mds.addArtifactToShop("skecz", 10, 2);
-////        view.printResultSet(mds.showStudents());
-//        view.printStudentList(mds.showStudents());
-////        view.printResultSet(mds.showStudentsWallet(3).get(0));
-////        view.printResultSet(mds.showStudentsWallet(3).get(1));
-//        view.printWallet(mds.showStudentsWallet(1));
-//
-//    }
+    public static void main(String[] args) {
+        MentorDAOSQL mds = new MentorDAOSQL();
+        View view = new View();
+//        mds.createStudent("adam", "maczek", "1b", "anna.naan@buziaczek.pl", "0700990880", 45, 0);
+//          mds.addQuest("zrobic_sniadanie",100, 2);
+//        mds.addArtifactToShop("skecz", 10, 2);
+//        view.printResultSet(mds.showStudents());
+        view.printStudentList(mds.showStudents());
+//        view.printResultSet(mds.showStudentsWallet(3).get(0));
+//        view.printResultSet(mds.showStudentsWallet(3).get(1));
+        view.printWallet(mds.showStudentsWallet(1));
+
+    }
 }
