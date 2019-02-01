@@ -15,8 +15,6 @@ public class Admin implements HttpHandler {
         JtwigModel model = JtwigModel.newModel();
         String response = template.render(model);
         sendResponse(httpExchange, response);
-        return;
-
     }
 
     private void sendResponse(HttpExchange httpExchange, String response) throws IOException {

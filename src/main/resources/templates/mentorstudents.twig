@@ -24,30 +24,15 @@
             <th >Wallet</th>
 
         </tr>
-        <tr>
-            <td class ="id">1</td>
-            <td class ="name">Jaś</td>
-            <td class = "surname">Fasola</td>
-            <td class = "surname">1a</td>
-            <td class = "surname">0</td>
-        </tr>
-
-        <tr>
-            <td class ="id">1</td>
-            <td class ="name">Jaś</td>
-            <td class = "surname">Fasola</td>
-            <td class = "surname">2a</td>
-            <td class = "surname">0</td>
-        </tr>
-
-        <tr>
-            <td class ="id">1</td>
-            <td class ="name">Jaś</td>
-            <td class = "surname">Fasola</td>
-            <td class = "surname">1a</td>
-            <td class = "surname">0</td>
-
-        </tr>
+        {% for student in students %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>{{ student.firstName}}</td>
+                <td>{{ student.lastName}}</td>
+                <td>{{ student.clas}}</td>
+                <td>{{ student.coolCoins}}</td>
+            </tr>
+        {% endfor %}
 
 
     </table>
@@ -55,17 +40,19 @@
 
 </section>
 
-<div id="addMentorBox">
-    <input type="text" id="id" placeholder="Enter id" required/>
-    <input type="text" id="name" placeholder="Enter mentor's name" required>
-    <input type="text" id="surname" placeholder="Enter mentor's surname" required>
-    <input type="text" id="class" placeholder="Enter student's class" required>
-    <input type="text" id="wallet" placeholder="Enter student's coins on start" required>
-    <input type="submit" id="button" value="Add Student" onclick="addMentor()">
-</div>
-<div id="removeMentorBox">
-    <input type="text" id="idToRemove" placeholder="Enter id to kick out a student" required/>
-    <input type="submit" id="buttonToRemove" value="Remove Student" onclick="removeMentor()">
-</div>
+<form id="addMentorBox" method="POST">
+    <input type="text" name="name" placeholder="Enter student's name" required/>
+    <input type="text" name="surname" placeholder="Enter student's surname" required>
+    <input type="text" name="class" placeholder="Enter student's class" required>
+    <input type="text" name="email" placeholder="Enter student's email" required>
+    <input type="text" name="phonenumber" placeholder="Enter student's phone number" required>
+    <input type="text" name="coolcoins" placeholder="Enter student's coins" required>
+    <input type="text" name="level" placeholder="Enter student's level" required>
+    <input type="submit" id="button" value="Add Student">
+</form>
+<form id="removeMentorBox" method="POST">
+    <input type="text" id="idToRemove" name="id" placeholder="Enter id to kick out a student" required/>
+    <input type="submit" id="buttonToRemove" value="Remove Student">
+</form>
 </body>
 </html>

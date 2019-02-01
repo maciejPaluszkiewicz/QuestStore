@@ -25,4 +25,6 @@ public interface MentorDAO {
 
     Wallet showStudentsWallet(int id_student);
 
+    void removeStudentById(String idStudent);
+
 }

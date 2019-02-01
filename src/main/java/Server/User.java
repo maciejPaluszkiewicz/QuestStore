@@ -15,7 +15,6 @@ public class User implements HttpHandler {
         JtwigModel model = JtwigModel.newModel();
         String response = template.render(model);
         sendResponse(httpExchange, response);
-        return;
 
     }
 
