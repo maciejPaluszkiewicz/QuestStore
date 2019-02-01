@@ -46,7 +46,6 @@ public class LogIn implements HttpHandler {
                     }
                 }
                 else {
-                    System.out.println("WSZLEM");
                     loadLoginSite(httpExchange);
                 }
             }
@@ -60,14 +59,14 @@ public class LogIn implements HttpHandler {
 
     }
 
-    private void sendResponse(String response, HttpExchange httpExchange) throws IOException {
+    public void sendResponse(String response, HttpExchange httpExchange) throws IOException {
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
     }
 
-    private void loadMentor(HttpExchange httpExchange) throws IOException {
+    public void loadMentor(HttpExchange httpExchange) throws IOException {
         httpExchange.getResponseHeaders().add("Location", "/mentor");
         httpExchange.sendResponseHeaders(302,0);
         OutputStream os = httpExchange.getResponseBody();
@@ -75,7 +74,7 @@ public class LogIn implements HttpHandler {
         os.close();
     }
 
-    private void loadStudent(HttpExchange httpExchange) throws IOException {
+    public void loadStudent(HttpExchange httpExchange) throws IOException {
         httpExchange.getResponseHeaders().add("Location", "/student");
         httpExchange.sendResponseHeaders(302,0);
         OutputStream os = httpExchange.getResponseBody();
@@ -83,7 +82,7 @@ public class LogIn implements HttpHandler {
         os.close();
     }
 
-    private void loadAdmin(HttpExchange httpExchange) throws IOException {
+    public void loadAdmin(HttpExchange httpExchange) throws IOException {
         httpExchange.getResponseHeaders().add("Location", "/admin");
         httpExchange.sendResponseHeaders(302,0);
         OutputStream os = httpExchange.getResponseBody();
@@ -92,7 +91,6 @@ public class LogIn implements HttpHandler {
     }
 
     public List<HttpCookie> findCurrentCookie(HttpExchange httpExchange){
-        System.out.println("weszlem do findCookie");
         String cookies = httpExchange.getRequestHeaders().getFirst("Cookie");
         return HttpCookie.parse(cookies);
     }
@@ -105,6 +103,14 @@ public class LogIn implements HttpHandler {
         OutputStream os = httpExchange.getResponseBody();
         os.write("".getBytes());
         os.close();
+    }
+
+    public boolean isCookieTypeAsAcces(String acces, HttpExchange httpExchange) throws SQLException{
+        HttpCookie cookie = findCurrentCookie(httpExchange).get(0);
+        if(sessionDAO.getTypeBySessionId(cookie.getValue()).equals(acces)){
+            return true;
+        }
+        return false;
     }
 
 }

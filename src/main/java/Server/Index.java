@@ -25,7 +25,7 @@ public class Index implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
         if(method.equals("GET")) {
-            String response = loadLoginSite();
+            String response = loginSiteTwigString();
             sendResponse(response, httpExchange);
         }
         if(method.equals("POST")){
@@ -33,25 +33,22 @@ public class Index implements HttpHandler {
             String url = readURL(httpExchange);
             String login = parseURL(url).get("login");
             String password = parseURL(url).get("password");
-            login = login.replace("%40","@");
-            System.out.println(login+" "+password);
-            user=autorise(login,password);
-
+            if (login != null && password != null) {
+                login = login.replace("%40", "@");
+                user = autorise(login, password);
+            }
             if(user.getId()!=null) {
 
                 Random generator = new Random();
                 int cookieId = generator.nextInt(100000) + 1;
-                System.out.println("Stworzylem Id");
                 sesDao.addSession(Integer.toString(cookieId),user.getType(), Integer.parseInt(user.getId()));
-                String response = loadLoginSite();
+                String response = loginSiteTwigString();
                 HttpCookie cookie = new HttpCookie("sessionId", Integer.toString(cookieId));
                 httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
                 loadHomeSite(httpExchange);
             }
             else{
-                System.out.println("WszlemTu");
                 loadHomeSite(httpExchange);
-                //sendResponse(response,httpExchange);
             }
 
         }
@@ -59,17 +56,17 @@ public class Index implements HttpHandler {
     }
 
     private void loadHomeSite(HttpExchange httpExchange) throws IOException {
-        {
+
             httpExchange.getResponseHeaders().add("Location", "/loginn");
             httpExchange.sendResponseHeaders(302,0);
             OutputStream os = httpExchange.getResponseBody();
             os.write("".getBytes());
             os.close();
-        }
+
 
     }
 
-    private String loadLoginSite() {
+    private String loginSiteTwigString() {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/index.twig");
         JtwigModel model = JtwigModel.newModel();
         return template.render(model);
