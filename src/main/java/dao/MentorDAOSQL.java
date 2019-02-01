@@ -51,6 +51,19 @@ public class MentorDAOSQL implements MentorDAO {
             e.printStackTrace();
         }
     }
+    @Override
+    public void removeStudentById(String idStudent){
+        int id = Integer.parseInt(idStudent);
+        String sql = "DELETE FROM students WHERE id = (?);";
+        try{
+            dbConnector.connect();
+            PreparedStatement preparedStatement = dbConnector.getConnection().prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e ){
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void addQuest(String quest_name, int quest_value, int category) {

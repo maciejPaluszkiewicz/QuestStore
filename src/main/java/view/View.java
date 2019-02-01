@@ -43,8 +43,8 @@ public class View {
     }
 
     public void printStudent(Student student) {
-        System.out.println("id: " + student.getId() + " | " + "name: " + student.getFirst_name() + " | " + "last name: " +
-                student.getLast_name() + " | " + "class: " + student.getClas() + " | " + "email: " + student.getEmail() + " | " + "phone number: " +
+        System.out.println("id: " + student.getId() + " | " + "name: " + student.getfirstName() + " | " + "last name: " +
+                student.getlastName() + " | " + "class: " + student.getClas() + " | " + "email: " + student.getEmail() + " | " + "phone number: " +
                 student.getPhone_number() + " | " + "cool coins: " + student.getCoolCoins() + " | " + "level: " + student.getLevel() + " | ");
     }
 
