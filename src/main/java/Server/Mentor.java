@@ -7,21 +7,25 @@ import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.SQLException;
 
-public class Mentor implements HttpHandler {
+public class Mentor extends LogIn implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor.twig");
-        JtwigModel model = JtwigModel.newModel();
-        String response = template.render(model);
-        sendResponse(httpExchange, response);
+        try {
+            if (isCookieTypeAsAcces("mentor", httpExchange)) {
+                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor.twig");
+                JtwigModel model = JtwigModel.newModel();
+                String response = template.render(model);
+                sendResponse(response,httpExchange);
 
+            }
+            else {
+                loadLoginSite(httpExchange);
+            }
+        }catch (SQLException e){
+        e.printStackTrace();
+        }
     }
 
-    private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
-        httpExchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-    }
 }

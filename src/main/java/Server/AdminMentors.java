@@ -10,35 +10,43 @@ import util.Util;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public class AdminMentors implements HttpHandler {
+public class AdminMentors extends LogIn implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/adminMentors.twig");
-        JtwigModel model = JtwigModel.newModel();
-        List<Mentor> mentorList = new ArrayList<>();
-        AdminDAOSQL adminDAOSQL = new AdminDAOSQL();
-        String method = httpExchange.getRequestMethod();
-        if (method.equals("POST")){
-            String formData = Util.getFormData(httpExchange);
-            Map<String, String> inputs = Util.parseFormData(formData);
-            if (inputs.size() == 4){
-                adminDAOSQL.createMentor(inputs.get("name"),inputs.get("surname"),inputs.get("email"),inputs.get("phonenumber"),"123");
-            }else if(inputs.size() == 1){
-                adminDAOSQL.removeMentorById(inputs.get("id"));
+        try {
+            if (isCookieTypeAsAcces("admin", httpExchange)) {
+                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/adminMentors.twig");
+                JtwigModel model = JtwigModel.newModel();
+                List<Mentor> mentorList = new ArrayList<>();
+                AdminDAOSQL adminDAOSQL = new AdminDAOSQL();
+                String method = httpExchange.getRequestMethod();
+                if (method.equals("POST")) {
+                    String formData = Util.getFormData(httpExchange);
+                    Map<String, String> inputs = Util.parseFormData(formData);
+                    if (inputs.size() == 4) {
+                        adminDAOSQL.createMentor(inputs.get("name"), inputs.get("surname"), inputs.get("email"), inputs.get("phonenumber"), "123");
+                    } else if (inputs.size() == 1) {
+                        adminDAOSQL.removeMentorById(inputs.get("id"));
+                    }
+                }
+
+                mentorList = adminDAOSQL.getMentors();
+                sendResponse(httpExchange, template, model, mentorList);
+
             }
+            else{
+                loadLoginSite(httpExchange);
+            }
+        }catch (SQLException e){
         }
-
-        mentorList = adminDAOSQL.getMentors();
-        sendResponse(httpExchange, template, model, mentorList);
-
     }
-
     private void sendResponse(HttpExchange httpExchange, JtwigTemplate template, JtwigModel model, List<Mentor> mentorList) throws IOException {
         model.with("mentors", mentorList);
         String response = template.render(model);
