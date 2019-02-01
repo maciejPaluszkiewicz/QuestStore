@@ -80,7 +80,7 @@ public class LogIn implements HttpHandler {
     }
 
     public void loadStudent(HttpExchange httpExchange) throws IOException {
-        httpExchange.getResponseHeaders().add("Location", "/student");
+        httpExchange.getResponseHeaders().add("Location", "/user");
         httpExchange.sendResponseHeaders(302,0);
         OutputStream os = httpExchange.getResponseBody();
         os.write("".getBytes());

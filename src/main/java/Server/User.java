@@ -13,7 +13,7 @@ public class User extends LogIn implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         try {
-            if (isCookieTypeAsAcces("mentor", httpExchange)) {
+            if (isCookieTypeAsAcces("student", httpExchange)) {
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/user.twig");
                 JtwigModel model = JtwigModel.newModel();
                 String response = template.render(model);
