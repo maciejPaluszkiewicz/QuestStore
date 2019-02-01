@@ -13,7 +13,12 @@ import java.util.List;
 
 public class LogIn implements HttpHandler {
     SessionDAO sessionDAO = new SessionDAOSQL();
+
     String userId = "";
+
+    public String getUserId() {
+        return userId;
+    }
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();

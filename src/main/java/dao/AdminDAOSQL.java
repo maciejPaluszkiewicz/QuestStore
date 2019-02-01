@@ -1,7 +1,6 @@
 package dao;
 
-import model.Mentor;
-import view.View;
+import model.Mentormod;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,25 +81,25 @@ public class AdminDAOSQL implements AdminDAO {
 
     }
     @Override
-    public List<Mentor> getMentors() {
-        List<Mentor> mentorList = new ArrayList<>();
+    public List<Mentormod> getMentors() {
+        List<Mentormod> mentormodList = new ArrayList<>();
         ResultSet rs = dataBaseConnector.query("SELECT * FROM mentors");
         try {
             while (rs.next()) {
-                Mentor mentor = new Mentor(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
-                mentorList.add(mentor);
+                Mentormod mentormod = new Mentormod(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                mentormodList.add(mentormod);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return mentorList;
+        return mentormodList;
     }
 
     @Override
-    public Mentor showMentorById(int idMentor) {
+    public Mentormod showMentorById(int idMentor) {
 //        return dataBaseConnector.query("SELECT * FROM mentors WHERE id =" + id+";");
         ResultSet rs = dataBaseConnector.query("SELECT * FROM mentors WHERE id =" + idMentor + ";");
-        Mentor mentor = null;
+        Mentormod mentormod = null;
         try {
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -108,13 +107,13 @@ public class AdminDAOSQL implements AdminDAO {
                 String last_name = rs.getString("last_name");
                 String email = rs.getString("email");
                 String phone_number = rs.getString("phone_number");
-                mentor = new Mentor(id, first_name, last_name, email, phone_number);
+                mentormod = new Mentormod(id, first_name, last_name, email, phone_number);
 
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return mentor;
+        return mentormod;
     }
 
     @Override

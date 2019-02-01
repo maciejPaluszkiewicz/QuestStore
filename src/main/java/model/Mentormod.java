@@ -1,13 +1,13 @@
 package model;
 
-public class Mentor {
+public class Mentormod {
     private int id;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
 
-    public Mentor(int id, String firstName, String lastName, String email, String phoneNumber) {
+    public Mentormod(int id, String firstName, String lastName, String email, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

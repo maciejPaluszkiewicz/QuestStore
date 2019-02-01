@@ -1,6 +1,6 @@
 package view;
 
-import model.Mentor;
+import model.Mentormod;
 import model.Student;
 import model.Wallet;
 
@@ -54,14 +54,14 @@ public class View {
         }
     }
 
-    public void printMentorList(List<Mentor> mentorList){
-        for (Mentor mentor : mentorList){
-            printMentor(mentor);
+    public void printMentorList(List<Mentormod> mentormodList){
+        for (Mentormod mentormod : mentormodList){
+            printMentor(mentormod);
         }
     }
 
-    public void printMentor(Mentor mentor) {
-        System.out.println(mentor.getId() + " " + mentor.getFirst_name() + " " + mentor.getLast_name() + " " + mentor.getEmail() + " " + mentor.getPhoneNumber());
+    public void printMentor(Mentormod mentormod) {
+        System.out.println(mentormod.getId() + " " + mentormod.getFirst_name() + " " + mentormod.getLast_name() + " " + mentormod.getEmail() + " " + mentormod.getPhoneNumber());
     }
 
     public void printWallet(Wallet wallet) {

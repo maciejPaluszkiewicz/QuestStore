@@ -3,16 +3,14 @@ package Server;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.AdminDAOSQL;
-import model.Mentor;
+import model.Mentormod;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import util.Util;
 
 import java.io.*;
-import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +22,7 @@ public class AdminMentors extends LogIn implements HttpHandler {
             if (isCookieTypeAsAcces("admin", httpExchange)) {
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/adminMentors.twig");
                 JtwigModel model = JtwigModel.newModel();
-                List<Mentor> mentorList = new ArrayList<>();
+                List<Mentormod> mentormodList = new ArrayList<>();
                 AdminDAOSQL adminDAOSQL = new AdminDAOSQL();
                 String method = httpExchange.getRequestMethod();
                 if (method.equals("POST")) {
@@ -37,8 +35,8 @@ public class AdminMentors extends LogIn implements HttpHandler {
                     }
                 }
 
-                mentorList = adminDAOSQL.getMentors();
-                sendResponse(httpExchange, template, model, mentorList);
+                mentormodList = adminDAOSQL.getMentors();
+                sendResponse(httpExchange, template, model, mentormodList);
 
             }
             else{
@@ -47,8 +45,8 @@ public class AdminMentors extends LogIn implements HttpHandler {
         }catch (SQLException e){
         }
     }
-    private void sendResponse(HttpExchange httpExchange, JtwigTemplate template, JtwigModel model, List<Mentor> mentorList) throws IOException {
-        model.with("mentors", mentorList);
+    private void sendResponse(HttpExchange httpExchange, JtwigTemplate template, JtwigModel model, List<Mentormod> mentormodList) throws IOException {
+        model.with("mentors", mentormodList);
         String response = template.render(model);
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();

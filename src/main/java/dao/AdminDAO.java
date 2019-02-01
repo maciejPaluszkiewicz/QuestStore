@@ -1,6 +1,6 @@
 package dao;
 
-import model.Mentor;
+import model.Mentormod;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ public interface AdminDAO {
 
     void editMentor(String columnToChange, String update, int id);
 
-    List<Mentor> getMentors();
+    List<Mentormod> getMentors();
 
-    Mentor showMentorById(int id);
+    Mentormod showMentorById(int id);
 
     void createLevelOfExperience();
 
