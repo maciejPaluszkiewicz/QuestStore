@@ -6,6 +6,18 @@ import java.sql.SQLException;
 
 public class SessionDAOSQL implements SessionDAO {
     private DataBaseConnector dbConnector = new DataBaseConnector();
+
+    @Override
+    public void deleteUserBySessionId(String sessionId) throws SQLException {
+        String sql = "DELETE FROM session WHERE session_id LIKE ?;";
+            dbConnector.connect();
+            PreparedStatement stmt = dbConnector.getConnection().prepareStatement(sql);
+            stmt.setString(1, sessionId);
+            stmt.executeUpdate();
+
+
+    }
+
     @Override
     public String getTypeBySessionId(String sessionId) throws SQLException {
         String type="";

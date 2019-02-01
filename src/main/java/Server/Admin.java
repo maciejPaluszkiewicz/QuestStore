@@ -2,11 +2,8 @@ package Server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.sql.SQLException;
 
 public class Admin extends LogIn implements HttpHandler {
@@ -14,12 +11,11 @@ public class Admin extends LogIn implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         try {
             if(isCookieTypeAsAcces("admin",httpExchange)) {
-
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin.twig");
-                JtwigModel model = JtwigModel.newModel();
-                String response = template.render(model);
-                sendResponse(response, httpExchange);
-
+                String method = httpExchange.getRequestMethod();
+                if(method.equals("POST")) {
+                    logOut(httpExchange);
+                }
+                loadJtwig("templates/admin.twig",httpExchange);
             }
             else{
                 loadLoginSite(httpExchange);

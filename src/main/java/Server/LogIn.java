@@ -4,6 +4,8 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.SessionDAO;
 import dao.SessionDAOSQL;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -116,6 +118,27 @@ public class LogIn implements HttpHandler {
             return true;
         }
         return false;
+    }
+
+    public void logOut(HttpExchange httpExchange) throws IOException{
+            HttpCookie cookie = findCurrentCookie(httpExchange).get(0);
+            try {
+                sessionDAO.deleteUserBySessionId(cookie.getValue());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            loadLoginSite(httpExchange);
+
+
+    }
+
+    public void loadJtwig(String pathJtwig, HttpExchange httpExchange) throws IOException{
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(pathJtwig);
+        JtwigModel model = JtwigModel.newModel();
+        String response= template.render(model);
+        sendResponse(response,httpExchange);
+
+
     }
 
 }
