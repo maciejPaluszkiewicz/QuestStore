@@ -1,25 +1,21 @@
 package model;
 
+import java.util.List;
+
 public class Wallet {
     private int coolCoinsAmount;
-    private String artifactName;
-    private int quantity;
+    private  List<Artifact> artifactList;
 
-    public Wallet(int coolCoinsAmount, String artifactName, int quantity) {
+    public Wallet(int coolCoinsAmount, List<Artifact> artifactList) {
         this.coolCoinsAmount = coolCoinsAmount;
-        this.artifactName = artifactName;
-        this.quantity = quantity;
+        this.artifactList = artifactList;
     }
 
     public int getCoolCoinsAmount() {
         return coolCoinsAmount;
     }
 
-    public String getArtifactName() {
-        return artifactName;
-    }
-
-    public int getQuantity() {
-        return quantity;
+    public List<Artifact> getArtifactList() {
+        return artifactList;
     }
 }

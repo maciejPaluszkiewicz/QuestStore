@@ -110,12 +110,12 @@ public class StudentDAOSQL implements StudentDAO {
         return rs;
     }
 
-//    public static void main(String[] args) {
-//        StudentDAOSQL studentDAOSQL = new StudentDAOSQL();
-//        View view = new View();
-//        view.printListOfResultSet(studentDAOSQL.showWallet(1));
+    public static void main(String[] args) {
+        StudentDAOSQL studentDAOSQL = new StudentDAOSQL();
+        View view = new View();
+        view.printListOfResultSet(studentDAOSQL.showWallet(1));
 //        view.printResultSet(studentDAOSQL.showMyLevel(1));
 //        studentDAOSQL.buyArtifacts(3, 2, 4);
-//
-//    }
+
+    }
 }

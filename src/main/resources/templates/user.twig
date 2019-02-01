@@ -12,7 +12,7 @@
     <progress min="0" max = 100 value="35"></progress>
 </article>
 <article id="wallet">
-    <p>YOUR COINS: 17</p>
+    <p>YOUR COINS: {{ wallet.coolCoinsAmount }}</p>
 </article>
 <a href="shop"><article id="shop">
     </article></a>
@@ -22,14 +22,9 @@
 <article id = "items">
     <p id="itemListTitle">My items</p>
     <ul>
-        <li>Item1</li>
-        <li>Itfgfdh</li>
-        <li>Item1</li>
-        <li>Itemsdffsdfsdfdsfsdsfdfdsdsfsfdsfdsfd1kc</li>
-        <li>Itecfm1</li>
-        <li>Item1</li>
-        <li>Item1</li>
-        <li>Item1</li>
+        {% for artifact in wallet.artifactList %}
+        <li>{{ artifact.artifactName}}: {{ artifact.quantity }}</li>
+        {% endfor %}
     </ul>
 </article>
 </body>

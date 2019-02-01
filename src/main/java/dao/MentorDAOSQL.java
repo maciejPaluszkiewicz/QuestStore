@@ -1,4 +1,5 @@
 package dao;
+import model.Artifact;
 import model.Student;
 import model.Wallet;
 import view.View;
@@ -191,16 +192,18 @@ public class MentorDAOSQL implements MentorDAO {
         int coolCoins = 0;
         String artifactName = "";
         int quantity = 0;
+        List<Artifact> artifactList = new ArrayList<>();
         coolCoins = getCoolCoins(rs, coolCoins);
         try {
             while (rs2.next()) {
                 artifactName = rs2.getString("artifact_name");
                 quantity = rs2.getInt("quantity");
+                artifactList.add(new Artifact(artifactName,quantity));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Wallet wallet = new Wallet(coolCoins, artifactName, quantity);
+        Wallet wallet = new Wallet(coolCoins, artifactList);
         return wallet;
 
     }
@@ -217,9 +220,9 @@ public class MentorDAOSQL implements MentorDAO {
         return coolCoins;
     }
 
-//    public static void main(String[] args) {
-//        MentorDAOSQL mds = new MentorDAOSQL();
-//        View view = new View();
+    public static void main(String[] args) {
+        MentorDAOSQL mds = new MentorDAOSQL();
+        View view = new View();
 //        mds.createStudent("adam", "maczek", "1b", "anna.naan@buziaczek.pl", "0700990880", 45, 0);
 //          mds.addQuest("zrobic_sniadanie",100, 2);
 //        mds.addArtifactToShop("skecz", 10, 2);
@@ -227,7 +230,7 @@ public class MentorDAOSQL implements MentorDAO {
 //        view.printStudentList(mds.showStudents());
 //        view.printResultSet(mds.showStudentsWallet(3).get(0));
 //        view.printResultSet(mds.showStudentsWallet(3).get(1));
-//        view.printWallet(mds.showStudentsWallet(1));
+        view.printWallet(mds.showStudentsWallet(2));
 
-//    }
+    }
 }

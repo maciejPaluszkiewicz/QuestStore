@@ -1,5 +1,6 @@
 package view;
 
+import model.Artifact;
 import model.Mentormod;
 import model.Student;
 import model.Wallet;
@@ -65,7 +66,10 @@ public class View {
     }
 
     public void printWallet(Wallet wallet) {
-        System.out.println(wallet.getCoolCoinsAmount() + " " + wallet.getArtifactName() + " " + wallet.getQuantity());
+        System.out.println(wallet.getCoolCoinsAmount());
+        for (Artifact artifact : wallet.getArtifactList()){
+            System.out.println(artifact.getArtifactName() + artifact.getQuantity());
+        }
     }
 
 }
