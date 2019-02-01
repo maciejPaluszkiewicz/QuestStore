@@ -28,8 +28,8 @@ public class MentorStudents extends LogIn implements HttpHandler {
                 if (method.equals("POST")) {
                     String formData = Util.getFormData(httpExchange);
                     Map<String, String> inputs = Util.parseFormData(formData);
-                    if (inputs.size() == 7) {
-                        mentorDAOSQL.createStudent(inputs.get("name"), inputs.get("surname"), inputs.get("class"), inputs.get("email"), inputs.get("phonenumber"), Integer.parseInt(inputs.get("coolcoins")), Integer.parseInt(inputs.get("level")), "123");
+                    if (inputs.size() != 1) {
+                        mentorDAOSQL.createStudent(inputs.get("name"), inputs.get("surname"), inputs.get("class"), inputs.get("email"), inputs.get("phonenumber"), inputs.get("coolcoins"), inputs.get("level"), "123");
                     } else if (inputs.size() == 1) {
                         mentorDAOSQL.removeStudentById(inputs.get("id"));
                     }

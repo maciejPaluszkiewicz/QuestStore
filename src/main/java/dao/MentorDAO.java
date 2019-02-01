@@ -9,7 +9,7 @@ public interface MentorDAO {
 
     String autoriseMentor(String login, String password);
 
-    void createStudent(String name, String last_name, String _class, String email, String phone_number, int coolCoins, int lvl, String password);
+    void createStudent(String name, String last_name, String _class, String email, String phone_number, String coolCoins, String lvl, String password);
 
     void addQuest(String quest_name, int quest_value, int category);
 
