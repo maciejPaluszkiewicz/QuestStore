@@ -18,12 +18,11 @@ public class User extends LogIn implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         try {
-//            if (isCookieTypeAsAcces("student", httpExchange)) {
-//                String method = httpExchange.getRequestMethod();
-//                if(method.equals("POST")) {
-//                    logOut(httpExchange);
-//                }
-//                loadJtwig("templates/user.twig",httpExchange);
+            if (isCookieTypeAsAcces("student", httpExchange)) {
+                String method = httpExchange.getRequestMethod();
+                if(method.equals("POST")) {
+                    logOut(httpExchange);
+               }
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/user.twig");
                 JtwigModel model = JtwigModel.newModel();
                 HttpCookie cookie = findCurrentCookie(httpExchange).get(0);
@@ -36,10 +35,10 @@ public class User extends LogIn implements HttpHandler {
                 model.with("wallet",wallet);
                 String response = template.render(model);
                 sendResponse(response,httpExchange);
-//            }
-//            else {
-//                loadLoginSite(httpExchange);
-//            }
+            }
+            else {
+                loadLoginSite(httpExchange);
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }
