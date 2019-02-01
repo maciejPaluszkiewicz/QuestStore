@@ -32,8 +32,10 @@ public class MentorDAOSQL implements MentorDAO {
     }
 
     @Override
-    public void createStudent(String name, String last_name, String _class, String email, String phone_number, int coolCoins, int lvl, String password) {
-        String sql = "INSERT INTO students (first_name, last_name, class, email, phone_number, cool_coins, level) " +
+    public void createStudent(String name, String last_name, String _class, String email, String phone_number, String coolCoins, String lvl, String password) {
+        int coins = Integer.parseInt(coolCoins);
+        int level = Integer.parseInt(lvl);
+        String sql = "INSERT INTO students (first_name, last_name, class, email, phone_number, cool_coins, level, password) " +
                 "VALUES(?,?,?,?,?,?,?,?);";
         try {
             dbConnector.connect();
@@ -43,8 +45,8 @@ public class MentorDAOSQL implements MentorDAO {
             stmt.setString(3, _class);
             stmt.setString(4, email);
             stmt.setString(5, phone_number);
-            stmt.setInt(6, coolCoins);
-            stmt.setInt(7, lvl);
+            stmt.setInt(6, coins);
+            stmt.setInt(7, level);
             stmt.setString(8, password);
             stmt.executeUpdate();
         } catch (SQLException e) {
