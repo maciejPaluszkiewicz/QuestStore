@@ -10,15 +10,12 @@ import java.io.OutputStream;
 import java.sql.SQLException;
 
 public class Shop extends LogIn implements HttpHandler {
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         try {
             if (isCookieTypeAsAcces("student", httpExchange)) {
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/shop.twig");
-                JtwigModel model = JtwigModel.newModel();
-                String response = template.render(model);
-                sendResponse(response,httpExchange);
-
+                sendResponse(createResponse(), httpExchange);
             }
             else {
                 loadLoginSite(httpExchange);
@@ -27,4 +24,11 @@ public class Shop extends LogIn implements HttpHandler {
             e.printStackTrace();
         }
     }
+
+    String createResponse() {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/shop.twig");
+        JtwigModel model = JtwigModel.newModel();
+        return template.render(model);
+    }
+
 }

@@ -96,7 +96,7 @@ public class LogIn implements HttpHandler {
         os.write("".getBytes());
         os.close();
     }
-
+    // TODO: TEST
     public List<HttpCookie> findCurrentCookie(HttpExchange httpExchange){
         String cookies = httpExchange.getRequestHeaders().getFirst("Cookie");
         return HttpCookie.parse(cookies);
@@ -111,7 +111,7 @@ public class LogIn implements HttpHandler {
         os.write("".getBytes());
         os.close();
     }
-
+    // TODO: TEST
     public boolean isCookieTypeAsAcces(String acces, HttpExchange httpExchange) throws SQLException{
         HttpCookie cookie = findCurrentCookie(httpExchange).get(0);
         if(sessionDAO.getTypeBySessionId(cookie.getValue()).equals(acces)){

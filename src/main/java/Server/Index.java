@@ -65,13 +65,14 @@ public class Index implements HttpHandler {
 
 
     }
-
+    //TODO test
     private String loginSiteTwigString() {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/index.twig");
         JtwigModel model = JtwigModel.newModel();
         return template.render(model);
     }
 
+    //TODO Test
     private baseUserData autorise(String login, String password) {
         baseUserData user = new baseUserData();
         String admin=aDao.autoriseAdmin(login,password);
@@ -108,6 +109,7 @@ public class Index implements HttpHandler {
         os.close();
     }
 
+    //TODO Test
     public Map<String,String> parseURL(String URL) {
         Map<String,String> login = new HashMap();
         String[] pairsURL=URL.split("&");

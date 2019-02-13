@@ -14,11 +14,7 @@ public class MentorArtifacts extends LogIn implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         try {
             if (isCookieTypeAsAcces("mentor", httpExchange)) {
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentorartifacts.twig");
-                JtwigModel model = JtwigModel.newModel();
-                String response = template.render(model);
-                sendResponse(response,httpExchange);
-
+                sendResponse(createResponse(),httpExchange);
             }
             else {
                 loadLoginSite(httpExchange);
@@ -26,5 +22,11 @@ public class MentorArtifacts extends LogIn implements HttpHandler {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    String createResponse() {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentorartifacts.twig");
+        JtwigModel model = JtwigModel.newModel();
+        return template.render(model);
     }
 }

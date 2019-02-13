@@ -14,12 +14,7 @@ public class AdminCoins extends LogIn implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         try {
             if(isCookieTypeAsAcces("admin",httpExchange)) {
-
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admincoins.twig");
-                JtwigModel model = JtwigModel.newModel();
-                String response = template.render(model);
-                sendResponse(response, httpExchange);
-
+                sendResponse(createResponse(), httpExchange);
             }
             else{
                 loadLoginSite(httpExchange);
@@ -29,5 +24,9 @@ public class AdminCoins extends LogIn implements HttpHandler {
         }
     }
 
-
+    String createResponse() throws IOException {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admincoins.twig");
+        JtwigModel model = JtwigModel.newModel();
+        return template.render(model);
+    }
 }
