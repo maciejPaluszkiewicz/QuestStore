@@ -14,14 +14,15 @@ public class Mentor extends LogIn implements HttpHandler {
                 String method = httpExchange.getRequestMethod();
                 if(method.equals("POST")) {
                     logOut(httpExchange);
+                }else{
+                    loadJtwig("templates/mentor.twig",httpExchange);
                 }
-                loadJtwig("templates/mentor.twig",httpExchange);
             }
             else {
                 loadLoginSite(httpExchange);
             }
         }catch (SQLException e){
-        e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
