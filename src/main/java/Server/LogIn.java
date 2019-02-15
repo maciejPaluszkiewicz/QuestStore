@@ -2,6 +2,7 @@ package Server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpPrincipal;
 import dao.SessionDAO;
 import dao.SessionDAOSQL;
 import org.jtwig.JtwigModel;
@@ -27,43 +28,43 @@ public class LogIn implements HttpHandler {
         HttpCookie cookie;
         if(method.equals("GET")){
             try {
-            if (httpExchange.getRequestHeaders().getFirst("Cookie") == null) {
-
-                cookie = new HttpCookie("sessionId", "123");
-                httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
-                loadLoginSite(httpExchange);
-            }
-            cookie = findCurrentCookie(httpExchange).get(0);
-
-                String sesionId=cookie.getValue();
-
-                if (sessionDAO.isThereSessionId(sesionId)) {
-                    String type = sessionDAO.getTypeBySessionId(sesionId);
-                    this.userId = sessionDAO.getUserIdBySessionId(sesionId);
-                    switch (type){
-                        case "admin":
-                            loadAdmin(httpExchange);
-                            break;
-                        case"student":
-                            loadStudent(httpExchange);
-                            break;
-                        case"mentor":
-                            loadMentor(httpExchange);
-                            break;
-                    }
-                }
-                else {
+                if (httpExchange.getRequestHeaders().getFirst("Cookie") == null) {
+                    cookie = new HttpCookie("sessionId", "123");
+                    httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
                     loadLoginSite(httpExchange);
+                } else {
+                    cookie = findCurrentCookie(httpExchange).get(0);
+                    String sesionId = cookie.getValue();
+
+                    if (sessionDAO.isThereSessionId(sesionId)) {
+                        String type = sessionDAO.getTypeBySessionId(sesionId);
+                        this.userId = sessionDAO.getUserIdBySessionId(sesionId);
+                        loadProperUserPage(httpExchange, type);
+                    } else {
+                        loadLoginSite(httpExchange);
+                    }
                 }
             }
             catch (SQLException e){
                 e.printStackTrace();
             }
 
-            loadLoginSite(httpExchange);
+//            loadLoginSite(httpExchange);
         }
+    }
 
-
+    public void loadProperUserPage(HttpExchange httpExchange, String type) throws SQLException, IOException{
+        switch (type){
+            case "admin":
+                loadAdmin(httpExchange);
+                break;
+            case"student":
+                loadStudent(httpExchange);
+                break;
+            case"mentor":
+                loadMentor(httpExchange);
+                break;
+        }
     }
 
     public void sendResponse(String response, HttpExchange httpExchange) throws IOException {
@@ -96,7 +97,7 @@ public class LogIn implements HttpHandler {
         os.write("".getBytes());
         os.close();
     }
-    // TODO: TEST
+
     public List<HttpCookie> findCurrentCookie(HttpExchange httpExchange){
         String cookies = httpExchange.getRequestHeaders().getFirst("Cookie");
         return HttpCookie.parse(cookies);
@@ -111,7 +112,7 @@ public class LogIn implements HttpHandler {
         os.write("".getBytes());
         os.close();
     }
-    // TODO: TEST
+
     public boolean isCookieTypeAsAcces(String acces, HttpExchange httpExchange) throws SQLException{
         HttpCookie cookie = findCurrentCookie(httpExchange).get(0);
         if(sessionDAO.getTypeBySessionId(cookie.getValue()).equals(acces)){

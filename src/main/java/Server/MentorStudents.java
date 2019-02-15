@@ -2,6 +2,7 @@ package Server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import dao.DataBaseConnector;
 import dao.MentorDAOSQL;
 import model.Student;
 import org.jtwig.JtwigModel;
@@ -11,7 +12,6 @@ import util.Util;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +20,7 @@ public class MentorStudents extends LogIn implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         try {
             if (isCookieTypeAsAcces("mentor", httpExchange)) {
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentorstudents.twig");
-                JtwigModel model = JtwigModel.newModel();
-                List<Student> studentList = new ArrayList<>();
+                DataBaseConnector dbConnector = new DataBaseConnector();
                 MentorDAOSQL mentorDAOSQL = new MentorDAOSQL();
                 String method = httpExchange.getRequestMethod();
                 if (method.equals("POST")) {
@@ -34,9 +32,8 @@ public class MentorStudents extends LogIn implements HttpHandler {
                         mentorDAOSQL.removeStudentById(inputs.get("id"));
                     }
                 }
-                studentList = mentorDAOSQL.showStudents();
-                model.with("students", studentList);
-                String response = template.render(model);
+
+                String response = renderMentorStudents(mentorDAOSQL);
                 sendResponse(httpExchange, response);
 
             }
@@ -55,4 +52,14 @@ public class MentorStudents extends LogIn implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
+
+    public String renderMentorStudents(MentorDAOSQL mentorDAOSQL) {
+        List<Student> studentList = mentorDAOSQL.showStudents();
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentorstudents.twig");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("students", studentList);
+
+        return template.render(model);
+    }
+
 }

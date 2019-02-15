@@ -12,9 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpCookie;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class Index implements HttpHandler {
     MentorDAO mDao = new MentorDAOSQL();
@@ -27,8 +25,7 @@ public class Index implements HttpHandler {
         if(method.equals("GET")) {
             String response = loginSiteTwigString();
             sendResponse(response, httpExchange);
-        }
-        if(method.equals("POST")){
+        }else {
             baseUserData user = new baseUserData();
             String url = readURL(httpExchange);
             String login = parseURL(url).get("login");
@@ -39,12 +36,10 @@ public class Index implements HttpHandler {
             }
             if(user.getId()!=null) {
 
-                Random generator = new Random();
-                int cookieId = generator.nextInt(100000) + 1;
-                sesDao.addSession(Integer.toString(cookieId),user.getType(), Integer.parseInt(user.getId()));
-                String response = loginSiteTwigString();
-                HttpCookie cookie = new HttpCookie("sessionId", Integer.toString(cookieId));
-                httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
+                int cookieId = generateIdSession();
+                List<HttpCookie> cookies = addCookieSession(cookieId);
+                addCookieSessionToDatabase(user, sesDao, cookieId);
+                httpExchange.getResponseHeaders().add("Set-Cookie", cookies.get(0).toString());
                 loadHomeSite(httpExchange);
             }
             else{
@@ -55,24 +50,40 @@ public class Index implements HttpHandler {
 
     }
 
+    // DONE
+    public List<HttpCookie> addCookieSession(int cookieId) {
+        List<HttpCookie> cookies = new ArrayList<>();
+        HttpCookie cookie = new HttpCookie("sessionId", Integer.toString(cookieId));
+        cookies.add(cookie);
+        return cookies;
+    }
+
+    // DONE
+    public void addCookieSessionToDatabase(baseUserData user, SessionDAO sesDao, int cookieId) {
+        sesDao.addSession(Integer.toString(cookieId),user.getType(), Integer.parseInt(user.getId()));
+    }
+
+    private int generateIdSession() {
+        Random generator = new Random();
+        return generator.nextInt(100000) + 1;
+    }
+
     private void loadHomeSite(HttpExchange httpExchange) throws IOException {
 
-            httpExchange.getResponseHeaders().add("Location", "/loginn");
-            httpExchange.sendResponseHeaders(302,0);
-            OutputStream os = httpExchange.getResponseBody();
-            os.write("".getBytes());
-            os.close();
-
-
+        httpExchange.getResponseHeaders().add("Location", "/loginn");
+        httpExchange.sendResponseHeaders(302,0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write("".getBytes());
+        os.close();
     }
-    //TODO test
-    private String loginSiteTwigString() {
+
+    // DONE
+    public String loginSiteTwigString() {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/index.twig");
         JtwigModel model = JtwigModel.newModel();
         return template.render(model);
     }
 
-    //TODO Test
     private baseUserData autorise(String login, String password) {
         baseUserData user = new baseUserData();
         String admin=aDao.autoriseAdmin(login,password);
@@ -95,6 +106,7 @@ public class Index implements HttpHandler {
 
     }
 
+    // DONE
     public String readURL(HttpExchange httpExchange) throws IOException{
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
@@ -109,7 +121,7 @@ public class Index implements HttpHandler {
         os.close();
     }
 
-    //TODO Test
+    // DONE
     public Map<String,String> parseURL(String URL) {
         Map<String,String> login = new HashMap();
         String[] pairsURL=URL.split("&");

@@ -10,7 +10,6 @@ import util.Util;
 
 import java.io.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,32 +18,43 @@ public class AdminMentors extends LogIn implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         try {
-            if (isCookieTypeAsAcces("admin", httpExchange)) {
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/adminMentors.twig");
-                JtwigModel model = JtwigModel.newModel();
-                List<Mentormod> mentormodList = new ArrayList<>();
-                AdminDAOSQL adminDAOSQL = new AdminDAOSQL();
-                String method = httpExchange.getRequestMethod();
-                if (method.equals("POST")) {
-                    String formData = Util.getFormData(httpExchange);
-                    Map<String, String> inputs = Util.parseFormData(formData);
-                    if (inputs.size() == 4) {
-                        adminDAOSQL.createMentor(inputs.get("name"), inputs.get("surname"), inputs.get("email"), inputs.get("phonenumber"), "123");
-                    } else if (inputs.size() == 1) {
-                        adminDAOSQL.removeMentorById(inputs.get("id"));
-                    }
-                }
-
-                mentormodList = adminDAOSQL.getMentors();
-                sendResponse(httpExchange, template, model, mentormodList);
-
-            }
-            else{
-                loadLoginSite(httpExchange);
-            }
+            loadProperSite(httpExchange);
         }catch (SQLException e){
         }
     }
+
+    public void loadProperSite(HttpExchange httpExchange) throws SQLException, IOException{
+        if (isCookieTypeAsAcces("admin", httpExchange)) {
+            loadAdminMentorSite(httpExchange);
+        } else{
+            loadLoginSite(httpExchange);
+        }
+    }
+
+    public void loadAdminMentorSite(HttpExchange httpExchange) throws IOException {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/adminMentors.twig");
+        JtwigModel model = JtwigModel.newModel();
+        AdminDAOSQL adminDAOSQL = new AdminDAOSQL();
+        String method = httpExchange.getRequestMethod();
+        if (method.equals("POST")) {
+            String formData = Util.getFormData(httpExchange);
+            Map<String, String> inputs = Util.parseFormData(formData);
+            updateMentormodList(adminDAOSQL, inputs);
+        }
+        List<Mentormod> mentormodList = adminDAOSQL.getMentors();
+        sendResponse(httpExchange, template, model, mentormodList);
+    }
+
+    public void updateMentormodList(AdminDAOSQL adminDAOSQL, Map<String, String> inputs) {
+        if (inputs.size() == 4) {
+            adminDAOSQL.createMentor(inputs.get("name"), inputs.get("surname"), inputs.get("email"),
+                    inputs.get("phonenumber"), "123");
+        } else if (inputs.size() == 1) {
+            adminDAOSQL.removeMentorById(inputs.get("id"));
+        }
+    }
+
+
     private void sendResponse(HttpExchange httpExchange, JtwigTemplate template, JtwigModel model, List<Mentormod> mentormodList) throws IOException {
         model.with("mentors", mentormodList);
         String response = template.render(model);
@@ -53,5 +63,4 @@ public class AdminMentors extends LogIn implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
-
 }
