@@ -19,7 +19,7 @@ public class MentorArtifacts extends LogIn implements HttpHandler {
             else {
                 loadLoginSite(httpExchange);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

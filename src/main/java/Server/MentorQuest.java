@@ -19,7 +19,7 @@ public class MentorQuest extends LogIn implements HttpHandler {
             else {
                 loadLoginSite(httpExchange);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

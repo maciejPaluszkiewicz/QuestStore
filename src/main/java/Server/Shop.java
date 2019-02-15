@@ -10,7 +10,6 @@ import java.io.OutputStream;
 import java.sql.SQLException;
 
 public class Shop extends LogIn implements HttpHandler {
-
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         try {
@@ -20,7 +19,7 @@ public class Shop extends LogIn implements HttpHandler {
             else {
                 loadLoginSite(httpExchange);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
